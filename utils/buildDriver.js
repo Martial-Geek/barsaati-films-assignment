@@ -16,13 +16,12 @@ const getProxyDriver = async () => {
 
     // Set the Chrome options
     const options = new chrome.Options();
-    options.addArguments("--disable-gpu", "--no-sandbox"); // Add minimal options
-    // options.setProxy(
-    //   proxy.manual({
-    //     http: newProxyString,
-    //     https: newProxyString,
-    //   })
-    // );
+    options.setProxy(
+      proxy.manual({
+        http: newProxyString,
+        https: newProxyString,
+      })
+    );
 
     console.log("Chrome options set");
 
