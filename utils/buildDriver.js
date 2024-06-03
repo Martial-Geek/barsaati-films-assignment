@@ -17,19 +17,12 @@ const getProxyDriver = async () => {
     // Set the Chrome options
     const options = new chrome.Options();
     options.addArguments("--disable-gpu", "--no-sandbox"); // Add minimal options
-    // options.setProxy(
-    //   proxy.manual({
-    //     http: newProxyString,
-    //     https: newProxyString,
-    //   })
-    // );
-
-    // Log ChromeDriver version
-    // console.log("ChromeDriver version:", await chrome.getVersion());
-
-    // // Enable ChromeDriver logs
-    // options.setChromeLogFile("/path/to/chromedriver.log");
-    // options.addArguments("--verbose");
+    options.setProxy(
+      proxy.manual({
+        http: newProxyString,
+        https: newProxyString,
+      })
+    );
 
     console.log("Chrome options set");
 
