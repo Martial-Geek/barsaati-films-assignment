@@ -1,7 +1,7 @@
 // server.js
 const express = require("express");
 const path = require("path");
-const getTrendingTopics = require("./scripts/seleniumScript");
+const getTrendingTopics = require("../scripts/seleniumScript");
 require("dotenv").config();
 
 const app = express();
@@ -30,7 +30,7 @@ app.use(express.static("."));
 
 app.all("/", async (req, res) => {
   if (req.method === "GET") {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
   } else if (req.method === "POST") {
     try {
       console.log("Received request to run Selenium script");
