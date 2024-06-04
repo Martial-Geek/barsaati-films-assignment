@@ -20,17 +20,24 @@ const getProxyDriver = async () => {
     console.log(`Using Chrome binary: ${chromePath}`);
 
     // Set the Chrome options
-    const options = new chrome.Options().setChromeBinaryPath(chromePath);
-    options.setProxy(
-      proxy.manual({
-        http: newProxyString,
-        https: newProxyString,
-      })
-    );
+    const options = new chrome.Options();
+    // options.setChromeBinaryPath(chromePath);
+    options.addArguments("--headless=new");
+    options.addArguments("--disable-gpu");
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+    //maximise the window
+    options.addArguments("--start-maximized");
+    // options.setProxy(
+    //   proxy.manual({
+    //     http: newProxyString,
+    //     https: newProxyString,
+    //   })
+    // );
 
     console.log("Chrome options set");
 
-    // Initialize the WebDriver
+    // Initialize the WebDriver for chrome
     const driver = await new Builder()
       .forBrowser("chrome")
       .setChromeOptions(options)

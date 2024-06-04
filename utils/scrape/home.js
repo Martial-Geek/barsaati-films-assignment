@@ -5,6 +5,8 @@ const home = async (driver) => {
     // Wait for the page to navigate to the home page
     await driver.wait(until.urlContains("home"), 30000);
 
+    console.log("Navigated to the home page");
+
     //Wait for the trending topics section to be located
     const trendsDiv = await driver.wait(
       until.elementsLocated(
@@ -14,6 +16,8 @@ const home = async (driver) => {
       ),
       15000
     );
+
+    console.log("Trending topics section found");
 
     if (!trendsDiv) await driver.navigate().refresh();
 

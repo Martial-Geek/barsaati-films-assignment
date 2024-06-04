@@ -44,6 +44,8 @@ const login = async (driver) => {
     10000 // Timeout in milliseconds
   );
 
+  console.log("Found the password field");
+
   await passwordField.sendKeys(process.env.TWITTER_PASSWORD);
 
   // Click on the login button
@@ -52,6 +54,8 @@ const login = async (driver) => {
       "css-175oi2r r-sdzlij r-1phboty r-rs99b7 r-lrvibr r-19yznuf r-64el8z r-1fkl15p r-1loqt21 r-o7ynqc r-6416eg r-1ny4l3l"
     )
   );
+
+  console.log("Found the login button");
   await loginButton.click();
 };
 
