@@ -86,6 +86,7 @@
           .then((data) => {
             const header = document.createElement("h2");
             header.innerText = "Trending Topics:";
+            resultsElement.innerHTML = "";
             resultsElement.appendChild(header);
 
             const topicsList = document.createElement("ul");
