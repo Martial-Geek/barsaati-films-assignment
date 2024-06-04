@@ -3,7 +3,7 @@ const { By, until } = require("selenium-webdriver");
 const home = async (driver) => {
   try {
     // Wait for the page to navigate to the home page
-    await driver.wait(until.urlContains("home"), 30000);
+    await driver.wait(until.urlContains("home"), 60000);
 
     console.log("Navigated to the home page");
 
@@ -14,7 +14,7 @@ const home = async (driver) => {
           '//div[@class="css-146c3p1 r-bcqeeo r-1ttztb7 r-qvutc0 r-37j5jr r-a023e6 r-rjixqe r-b88u0q r-1bymd8e"]' //e
         )
       ),
-      15000
+      60000
     );
 
     console.log("Trending topics section found");
