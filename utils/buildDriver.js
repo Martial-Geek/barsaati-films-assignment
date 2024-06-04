@@ -1,54 +1,35 @@
 const { Builder } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
-const proxy = require("selenium-webdriver/proxy");
-const proxyChain = require("proxy-chain");
 const getAnonymizedProxy = require("../config/proxyConfig");
+const logger = require("../logger");
 require("dotenv").config();
 
 const getProxyDriver = async () => {
-  console.log("Starting test Selenium script...");
+  logger.sendLog("Starting Selenium script...");
 
   try {
-    // Define your proxy details
-
-    // Construct the new proxy string
     const newProxyString = await getAnonymizedProxy();
+    logger.sendLog(`Using proxy: ${newProxyString}`);
 
-    const chromePath =
-      process.env.CHROME_BIN ||
-      "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"; // Adjust the path as needed
-    console.log(`Using Chrome binary: ${chromePath}`);
-
-    // Set the Chrome options
     const options = new chrome.Options();
-    // options.setChromeBinaryPath(chromePath);
     options.addArguments("--headless=new");
     options.addArguments("--disable-gpu");
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
-    //maximise the window
     options.addArguments("--start-maximized");
-    // options.setProxy(
-    //   proxy.manual({
-    //     http: newProxyString,
-    //     https: newProxyString,
-    //   })
-    // );
 
-    console.log("Chrome options set");
+    logger.sendLog("Chrome options set");
 
-    // Initialize the WebDriver for chrome
     const driver = await new Builder()
       .forBrowser("chrome")
       .setChromeOptions(options)
       .build();
 
-    console.log("Driver built successfully");
+    logger.sendLog("Driver built successfully");
 
-    if (driver) return driver;
-    else throw new Error("Driver not initialized");
+    return driver;
   } catch (error) {
-    console.error("Error during WebDriver initialization:", error);
+    logger.sendLog(`Error during WebDriver initialization: ${error}`);
     throw error;
   }
 };

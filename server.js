@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const getTrendingTopics = require("./scripts/seleniumScript");
+const logger = require("./logger");
 require("dotenv").config();
 
 const app = express();
@@ -12,14 +13,27 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+app.get("/events", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.flushHeaders();
+
+  logger.addClient(res);
+
+  req.on("close", () => {
+    logger.removeClient(res);
+  });
+});
+
 app.post("/", async (req, res) => {
   try {
-    console.log("Received request to run Selenium script");
+    logger.sendLog("Received request to run Selenium script");
     const data = await getTrendingTopics();
-    console.log("Selenium script executed successfully:", data);
+    logger.sendLog("Selenium script executed successfully");
     res.json(data);
   } catch (error) {
-    console.error("Error running Selenium script:", error);
+    logger.sendLog(`Error running Selenium script: ${error}`);
     res.status(500).send("Error running Selenium script");
   }
 });
